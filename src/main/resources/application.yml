@@ -1,0 +1,35 @@
+#-----------------------------------------------------------#
+# OAuth2 / Open ID Authentication Proof of Concept Project  #
+#-----------------------------------------------------------#
+
+azure:
+  activedirectory:
+    tenant-id: {tenant-id}
+    active-directory-groups: OAUTH2_SB_1, OAUTH2_SB_2
+
+spring:
+  mvc:
+    error-redirect:
+      enabled: true
+      status-links:
+        403 : "forbidden"
+  # Azure Sandbox
+  security:
+    oauth2:
+      client:
+        registration:
+          azure:
+            client-id: {client-id}
+            client-secret: {client-secret}
+            provider: azure-oauth-provider
+        provider:
+          azure-oauth-provider:
+            authorization-uri: https://login.microsoftonline.com/{tenant-id}/oauth2/authorize
+            token-uri: https://login.microsoftonline.com/{tenant-id}/oauth2/token
+            user-info-uri: https://login.microsoftonline.com/{tenant-id}/openid/userinfo
+            jwk-set-uri: https://login.microsoftonline.com/{tenant-id}/discovery/keys
+            user-name-attribute: email
+
+logging:
+  level:
+    ROOT: INFO
